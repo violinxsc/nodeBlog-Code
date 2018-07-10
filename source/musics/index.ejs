@@ -1,0 +1,76 @@
+---
+title: 音乐
+toc: false
+comments: false
+date: 2018-06-28 16:04:06
+---
+<div class="article-meta" style="padding-bottom:10px">
+    <div class="article-date">
+        <span class="article-date" style="color:#555">
+            <i class="fa fa-calendar fa-fw"></i>创建时间:<time datetime="2018-06-28T15:12:06.000Z" itemprop="datePublished">2018-06-28</time>
+        </span>
+    </div>|
+    <span id="busuanzi_container_page_pv">
+	<i class="fa fa-book fa-fw"></i>浏览次数:<span id="busuanzi_value_page_pv"></span>次
+    </span>
+</div>
+<div class="photos-btn-wrap">
+	<a class="photos-btn" href="/photos">Photos</a>
+	<a class="photos-btn active" href="javascript:void(0)">Musics</a>
+	<a class="photos-btn" href="/videos">Videos</a>
+</div>
+<div id="aplayer" style="margin:20px 0"></div>
+
+<script>
+var url="https://musics-1256567675.cos.ap-beijing.myqcloud.com/";    //音乐存储库
+$(document).ready(function(){
+	var imgArray=new Array();    //封面数组
+	var lrcArray=new Array();    //歌词数组
+	var mp3Array=new Array();    //音乐数组
+	$.get(url,function(data){
+		var objList= data.getElementsByTagName('Key');    //获取所有项目列表
+		for(var i=0;i<objList.length;i++){
+			var keyStr=objList[i].innerHTML;
+			if(keyStr.indexOf("img/")!=-1 && keyStr!="img/"){
+				//key
+				imgArray.push(keyStr);
+			}else if(keyStr.indexOf("mp3/")!=-1 && keyStr!="mp3/"){
+				mp3Array.push(keyStr);
+			}else if(keyStr.indexOf("lrc/")!=-1 && keyStr!="lrc/"){
+				lrcArray.push(keyStr);
+			}
+			//array.push(objList[i].innerHTML);
+		}
+		//alert(imgArray);
+		//alert(lrcArray);
+		//alert(mp3Array);
+		//构造audio数组对象
+		var audioArray=new Array();
+		for(var j=0;j<mp3Array.length;j++){
+			var obj=new Object();
+			//提取项目中的作者和曲目
+			var data=mp3Array[j].split(" ");
+			var artist=data[0].substring(4);
+			var name=data[2].substring(0,data[2].length-4);
+			obj.name=name;
+			obj.artist=artist;
+			//保存作者和曲目之后，将中文转义
+			mp3Array[j]=encodeURI(mp3Array[j]);
+			obj.url=url+mp3Array[j];
+			var jpgStr=mp3Array[j].replace(".mp3",".jpg").replace("mp3","img");
+			obj.cover=url+jpgStr;
+			var lrcStr=mp3Array[j].replace(/mp3/g,"lrc");    //全部替换，正则表达式不用双引号
+			obj.lrc=url+lrcStr;
+			audioArray.push(obj);
+		}
+		var ap = new APlayer({
+		    container: document.getElementById('aplayer'),
+		    lrcType: 3,
+		    listFolded: false,
+		    listMaxHeight: 90,
+		    audio: audioArray
+		});
+	}
+	);
+});
+</script>

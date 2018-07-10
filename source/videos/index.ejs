@@ -1,0 +1,58 @@
+---
+title: 视频
+toc: false
+comments: false
+date: 2018-06-28 16:04:06
+---
+<div class="article-meta" style="padding-bottom:10px">
+    <div class="article-date">
+        <span class="article-date" style="color:#555">
+            <i class="fa fa-calendar fa-fw"></i>创建时间:<time datetime="2018-06-28T15:12:06.000Z" itemprop="datePublished">2018-06-28</time>
+        </span>
+    </div>|
+    <span id="busuanzi_container_page_pv">
+	<i class="fa fa-book fa-fw"></i>浏览次数:<span id="busuanzi_value_page_pv"></span>次
+    </span>
+</div>
+<div class="photos-btn-wrap">
+	<a class="photos-btn" href="/photos">Photos</a>
+	<a class="photos-btn" href="/musics">Musics</a>
+	<a class="photos-btn active" href="javascript:void(0)">Videos</a>
+</div>
+<ul id="app">
+	<template v-for="bean in list">
+		<li><a href="javascript:void(0)" v-on:click="playVideo(bean);"><span v-html="bean"></span></a></li>
+	</template>
+</ul>
+<video poster="../images/video.png" class="" id="video" controls="controls" loop="loop"></video>
+<%# 
+<video class="video-js vjs-default-skin" controls width="640px" height="360px"></video> %>
+<script>
+var myVid=document.getElementById("video");
+var url="https://videos-1256567675.cos.ap-beijing.myqcloud.com/";
+$(document).ready(function(){
+	var array=new Array();
+	$.get(url,function(data){
+		var objList= data.getElementsByTagName('Key');    //获取视频项目列表
+		for(var i=0;i<objList.length;i++){
+			var keyStr=objList[i].innerHTML;
+			if(keyStr.indexOf("/")==-1){
+				array.push(objList[i].innerHTML);
+			}
+		}
+		var app=new Vue({
+		  el: '#app',
+		  data: {
+		    list:array
+		  }
+		});
+	}
+	);
+});
+//播放视频
+function playVideo(name){
+	myVid.src=url+name;   ///待修改
+	myVid.load();
+	myVid.play();
+}
+</script>

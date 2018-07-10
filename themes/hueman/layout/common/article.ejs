@@ -1,0 +1,56 @@
+<article id="<%= post.layout %>-<%= post.slug %>" class="article article-single article-type-<%= post.layout %><%= (post.direction && post.direction.toLowerCase() === 'rtl' ? ' rtl' : '') %>" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        <% if (post.link || post.title) { %>
+            <header class="article-header">
+                <%- partial('post/title', { class_name: 'article-title' }) %>
+            </header>
+        <% } %>
+        <% if (post.layout != 'page') { %>
+            <div class="article-meta">
+                <%- partial('post/date', { class_name: 'article-date', date_format: null }) %>
+                <%- partial('post/tag') %>
+		&nbsp;|&nbsp;
+		<span id="busuanzi_container_page_pv"><i class="fa fa-book fa-fw"></i>阅读量:<span id="busuanzi_value_page_pv"></span>次</span>
+		&nbsp;|&nbsp;
+		<i class="fa fa-file-text fa-fw"></i>字数统计<span class="post-count"><%= wordcount(post.content) %>字</span>
+		&nbsp;|&nbsp;
+		<i class="fa fa-clock-o fa-fw"></i>阅读时长<span class="post-count"><%= min2read(post.content) %>分钟</span>
+            </div>
+        <% } %>
+        <%- partial('post/gallery') %>
+        <div class="article-entry" itemprop="articleBody">
+	    <!-- 目录内容 -->
+        <% if (post.toc){ %>
+            <p class="show-toc-btn" id="show-toc-btn" onclick="showToc();" style="display:none">
+            <span class="btn-bg"></span>
+            <span class="btn-text">文章导航</span>
+            </p>
+            <div id="toc-article" class="toc-article">
+                <span id="toc-close" class="toc-close" title="隐藏导航" onclick="showBtn();">×</span>
+                <strong class="toc-title">文章目录</strong>
+                <%- toc(post.content) %>
+           </div>
+           <script type="text/javascript">
+            function showToc(){
+                var toc_article = document.getElementById("toc-article");
+                var show_toc_btn = document.getElementById("show-toc-btn");
+                toc_article.setAttribute("style","display:block");
+                show_toc_btn.setAttribute("style","display:none");
+                };
+            function showBtn(){
+                var toc_article = document.getElementById("toc-article");
+                var show_toc_btn = document.getElementById("show-toc-btn");
+                toc_article.setAttribute("style","display:none");
+                show_toc_btn.setAttribute("style","display:block");
+                };
+           </script>
+        <% } %>     
+        <!-- 目录内容结束 -->
+            <%- post.content %>
+        </div>
+        <footer class="article-footer">
+            <%- partial('share/index', { post: post }) %>
+        </footer>
+    </div>
+</article>
+<%- partial('comment/index') %>

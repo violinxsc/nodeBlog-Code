@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" href="https://resource-1256567675.cos.ap-beijing.myqcloud.com/dao.png" >
+    <%- partial('pwa/index') %>
+    <%
+        var title = page.title;
+        if (is_archive()) {
+            title = __('index.archive');
+            if (is_month()) {
+                title += ': ' + page.year + '/' + page.month;
+            } else if (is_year()) {
+                title += ': ' + page.year;
+            }
+        } else if (is_category()) {
+            title = __('index.category') + ': ' + page.category;
+        } else if (is_tag()) {
+            title = __('index.tag') + ': ' + page.tag;
+        }
+    %>
+    <title><% if (title) { %><%= title %> | <% } %><%= config.title %></title>
+    <% if (theme.plugins.bing_site_verification) { %>
+      <meta name="msvalidate.01" content="<%- theme.plugins.bing_site_verification %>" />
+    <% } %>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <% if (page.tags) {
+        var keywords = [];
+        for (var i in page.tags.data) {
+            keywords.push(page.tags.data[i].name);
+        }
+    %>
+        <meta name="keywords" content="<%= keywords.join(',') %>" />
+    <% } %>
+    <%- open_graph({
+        image:          thumbnail(page),
+        fb_app_id:      theme.miscellaneous.open_graph.fb_app_id,
+        fb_admins:      theme.miscellaneous.open_graph.fb_admins,
+        twitter_id:     theme.miscellaneous.open_graph.twitter_id,
+        google_plus:    theme.miscellaneous.open_graph.google_plus,
+    }) %>
+    <%- meta(page) %>
+
+    <% if (theme.customize && theme.customize.social_links && theme.customize.social_links.rss) { %>
+        <link rel="alternate" href="<%- theme.customize.social_links.rss %>" title="<%= config.title %>" type="application/atom+xml" />
+    <% } %>
+
+    <% if (theme.customize.favicon) { %>
+        <link rel="icon" href="<%- url_for(theme.customize.favicon) %>" />
+    <% } %>
+
+    <%- css('libs/font-awesome/css/font-awesome.min') %>
+    <%- css('libs/titillium-web/styles') %>
+    <%- css('libs/source-code-pro/styles') %>
+
+    <%- css('css/style') %>
+    
+    <%- js('libs/jquery/2.2.4/jquery.min') %>
+    <%- partial('plugin/scripts', { isHead: true }) %>
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+    <link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+    <style>
+	    .pace .pace-progress {
+		background: #191970; /*进度条颜色*/
+		height: 5px;
+	    }
+	    .pace .pace-progress-inner {
+		 box-shadow: 0 0 10px #1E92FB, 0 0 5px     #1E92FB; /*阴影颜色*/
+	    }
+	    .pace .pace-activity {
+		border-top-color: #191970;    /*上边框颜色*/
+		border-left-color: #191970;    /*左边框颜色*/
+	    }
+    
+    </style>
+    <%- css('css/APlayer.min') %>
+    <%- js('libs/player/APlayer.min') %>
+    <%- js('libs/player/Meting.min') %>
+    <%- css('css/ins') %>
+    <%- css('photoSwipe/photoswipe') %>
+    <%- css('photoSwipe/default-skin') %>
+    <%- js('js/vue.min') %>
+    <%- js('libs/video/video') %>
+    <%- js('libs/video/videojs-playlist') %>
+    <%- css('libs/video/video-js') %>
+</head>

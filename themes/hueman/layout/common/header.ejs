@@ -1,0 +1,50 @@
+<header id="header" style="background-image: url(https://resource-1256567675.cos.ap-beijing.myqcloud.com/heiye.jpg); background-repeat:no-repeat; background-size:100% 100%;">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="<%- url_for() %>" class="logo"></a>
+                    </h1>
+                    <% if (theme.subtitle) { %>
+                        <h2 class="subtitle-wrap">
+                            <p class="subtitle"><%= theme.subtitle %></p>
+                        </h2>
+                    <% } %>
+		    <div class="aplayer"
+		        data-fixed=true
+			data-autoplay=true
+			data-name="芦苇荡"
+			data-artist="群星"
+			data-url="https://resource-1256567675.cos.ap-beijing.myqcloud.com/%E7%BE%A4%E6%98%9F%20-%20%E8%8A%A6%E8%8B%87%E8%8D%A1.mp3"
+			data-cover="https://resource-1256567675.cos.ap-beijing.myqcloud.com/%E8%8A%A6%E8%8B%87%E8%8D%A1.jpg">
+		    </div>
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            <% for (var i in theme.menu) {
+                                    if (i == 'Categories') { %>
+                                        <%- list_categories({
+                                            depth: 2,
+                                            style: 'list',
+                                            class: 'main-nav',
+                                            show_count: false,
+                                        }) %>
+                                    <% } else { %>
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="<%- url_for(theme.menu[i]) %>"><%= __('index.' + i.toLowerCase()) %></a>
+                                </li>
+                            <% }} %>
+                        </ul>
+                        <nav id="sub-nav">
+                            <%- partial('search/index') %>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<a href="https://github.com/violinxsc"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://resource-1256567675.cos.ap-beijing.myqcloud.com/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>

@@ -1,0 +1,58 @@
+---
+title: 视频
+toc: false
+comments: false
+date: 2018-06-28 16:04:06
+---
+<div class="article-meta" style="padding-bottom:10px">
+    <div class="article-date">
+        <span class="article-date" style="color:#555">
+            <i class="fa fa-calendar fa-fw"></i>创建时间:<time datetime="2018-06-28T15:12:06.000Z" itemprop="datePublished">2018-06-28</time>
+        </span>
+    </div>|
+    <span id="busuanzi_container_page_pv">
+	<i class="fa fa-book fa-fw"></i>浏览次数:<span id="busuanzi_value_page_pv"></span>次
+    </span>
+</div>
+<div class="photos-btn-wrap">
+	<a class="photos-btn" href="/photos">Photos</a>
+	<a class="photos-btn" href="/musics">Musics</a>
+	<a class="photos-btn active" href="javascript:void(0)">Videos</a>
+</div>
+
+<video id="video" class="video-js vjs-default-skin" controls width="640px" height="360px"></video>
+<script>
+var url="https://videos-1256567675.cos.ap-beijing.myqcloud.com/";
+var player = videojs(video);
+$(document).ready(function(){
+	var array=new Array();
+	$.get(url,function(data){
+		var objList= data.getElementsByTagName('Key');    //获取视频项目列表
+		for(var i=0;i<objList.length;i++){
+			var keyStr=objList[i].innerHTML;
+			if(keyStr.indexOf("mp4/")!=-1 && keyStr!="mp4/"){
+				array.push(objList[i].innerHTML);
+			}
+		}
+		//构造playList
+		var playList=new Array();    //播放列表
+		for(var j=0;j<array.length;j++){
+			array[j]=encodeURI(array[j]);
+			var playObj=new Object();
+			//
+			var sourceList=new Array();
+			var sourceObj=new Object();
+			sourceObj.src=url+array[j];
+			sourceObj.type="video/mp4"
+			sourceList.push(sourceObj);
+			playObj.sources=sourceList;
+			playObj.poster="https://resource-1256567675.cos.ap-beijing.myqcloud.com/video.png";
+			//
+			playList.push(playObj);
+		}
+		//
+		//console.log(JSON.stringify(playList));
+		player.playlist(playList);
+	}
+	);
+});
