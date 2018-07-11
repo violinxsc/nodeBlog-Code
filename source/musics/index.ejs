@@ -23,6 +23,8 @@ date: 2018-06-28 16:04:06
 
 <script>
 var url="https://musics-1256567675.cos.ap-beijing.myqcloud.com/";    //音乐存储库
+var defaultJpg_url="https://default-1256567675.cos.ap-beijing.myqcloud.com/default.jpg";    //默认封面
+var defaultLrc_url="https://default-1256567675.cos.ap-beijing.myqcloud.com/default.lrc";    //默认歌词
 $(document).ready(function(){
 	var imgArray=new Array();    //封面数组
 	var lrcArray=new Array();    //歌词数组
@@ -58,9 +60,17 @@ $(document).ready(function(){
 			mp3Array[j]=encodeURI(mp3Array[j]);
 			obj.url=url+mp3Array[j];
 			var jpgStr=mp3Array[j].replace(".mp3",".jpg").replace("mp3","img");
-			obj.cover=url+jpgStr;
+			if( $.inArray(decodeURI(jpgStr), imgArray)!=-1){     //判断是否有对应的歌词封面，没有采用默认的
+				obj.cover=url+jpgStr;
+			}else{
+				obj.cover=defaultJpg_url;
+			}
 			var lrcStr=mp3Array[j].replace(/mp3/g,"lrc");    //全部替换，正则表达式不用双引号
-			obj.lrc=url+lrcStr;
+			if( $.inArray(decodeURI(lrcStr), lrcArray)!=-1){     //判断是否有对应的歌词文件，没有采用默认的
+				obj.lrc=url+lrcStr;
+			}else{
+				obj.lrc=defaultLrc_url;
+			}
 			audioArray.push(obj);
 		}
 		var ap = new APlayer({
