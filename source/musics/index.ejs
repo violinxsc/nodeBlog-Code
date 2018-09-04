@@ -23,65 +23,6 @@ date: 2018-06-28 16:04:06
 <div id="aplayer" style="margin:20px 0"></div>
 
 <script>
-var url="https://musics-1256567675.cos.ap-beijing.myqcloud.com/";    //音乐存储库
-var defaultJpg_url="https://default-1256567675.cos.ap-beijing.myqcloud.com/default.jpg";    //默认封面
-var defaultLrc_url="https://default-1256567675.cos.ap-beijing.myqcloud.com/default.lrc";    //默认歌词
-$(document).ready(function(){
-	var imgArray=new Array();    //封面数组
-	var lrcArray=new Array();    //歌词数组
-	var mp3Array=new Array();    //音乐数组
-	$.get(url,function(data){
-		var objList= data.getElementsByTagName('Key');    //获取所有项目列表
-		for(var i=0;i<objList.length;i++){
-			var keyStr=objList[i].innerHTML;
-			if(keyStr.indexOf("img/")!=-1 && keyStr!="img/"){
-				//key
-				imgArray.push(keyStr);
-			}else if(keyStr.indexOf("mp3/")!=-1 && keyStr!="mp3/"){
-				mp3Array.push(keyStr);
-			}else if(keyStr.indexOf("lrc/")!=-1 && keyStr!="lrc/"){
-				lrcArray.push(keyStr);
-			}
-			//array.push(objList[i].innerHTML);
-		}
-		//alert(imgArray);
-		//alert(lrcArray);
-		//alert(mp3Array);
-		//构造audio数组对象
-		var audioArray=new Array();
-		for(var j=0;j<mp3Array.length;j++){
-			var obj=new Object();
-			//提取项目中的作者和曲目
-			var data=mp3Array[j].split(" ");
-			var artist=data[0].substring(4);
-			var name=data[2].substring(0,data[2].length-4);
-			obj.name=name;
-			obj.artist=artist;
-			//保存作者和曲目之后，将中文转义
-			mp3Array[j]=encodeURI(mp3Array[j]);
-			obj.url=url+mp3Array[j];
-			var jpgStr=mp3Array[j].replace(".mp3",".jpg").replace("mp3","img");
-			if( $.inArray(decodeURI(jpgStr), imgArray)!=-1){     //判断是否有对应的歌词封面，没有采用默认的
-				obj.cover=url+jpgStr;
-			}else{
-				obj.cover=defaultJpg_url;
-			}
-			var lrcStr=mp3Array[j].replace(/mp3/g,"lrc");    //全部替换，正则表达式不用双引号
-			if( $.inArray(decodeURI(lrcStr), lrcArray)!=-1){     //判断是否有对应的歌词文件，没有采用默认的
-				obj.lrc=url+lrcStr;
-			}else{
-				obj.lrc=defaultLrc_url;
-			}
-			audioArray.push(obj);
-		}
-		var ap = new APlayer({
-		    container: document.getElementById('aplayer'),
-		    lrcType: 3,
-		    listFolded: false,
-		    listMaxHeight: "330px",
-		    audio: audioArray
-		});
-	}
-	);
-});
+eval(function(d,e,a,c,b,f){b=function(a){return(a<e?"":b(parseInt(a/e)))+(35<(a%=e)?String.fromCharCode(a+29):a.toString(36))};if(!"".replace(/^/,String)){for(;a--;)f[b(a)]=c[a]||b(a);c=[function(a){return f[a]}];b=function(){return"\\w+"};a=1}for(;a--;)c[a]&&(d=d.replace(new RegExp("\\b"+b(a)+"\\b","g"),c[a]));return d}('5 7="B://Z-D.u.v-w.x.y/";5 L="B://q-D.u.v-w.x.y/q.G";5 F="B://q-D.u.v-w.x.y/q.8";$(H).P(J(){5 m=6 t();5 n=6 t();5 o=6 t();$.X(7,J(a){5 b=a.W(\'Q\');K(5 i=0;i<b.C;i++){5 c=b[i].Y;p(c.E("A/")!=-1&&c!="A/"){m.s(c)}r p(c.E("9/")!=-1&&c!="9/"){o.s(c)}r p(c.E("8/")!=-1&&c!="8/"){n.s(c)}}5 d=6 t();K(5 j=0;j<o.C;j++){5 e=6 U();5 a=o[j].V(" ");5 f=a[0].I(4);5 g=a[2].I(0,a[2].C-4);e.R=g;e.S=f;o[j]=T(o[j]);e.7=7+o[j];5 h=o[j].z(".9",".G").z("9","A");p($.M(N(h),m)!=-1){e.O=7+h}r{e.O=L}5 k=o[j].z(/9/g,"8");p($.M(N(k),n)!=-1){e.8=7+k}r{e.8=F}d.s(e)}5 l=6 10({11:H.12(\'13\'),14:3,15:16,17:"18",19:d})})});',
+62,72,"     var new url lrc mp3                if default else push Array cos ap beijing myqcloud com replace img https length 1256567675 indexOf defaultLrc_url jpg document substring function for defaultJpg_url inArray decodeURI cover ready Key name artist encodeURI Object split getElementsByTagName get innerHTML musics APlayer container getElementById aplayer lrcType listFolded false listMaxHeight 330px audio".split(" "),0,{}));
 </script>

@@ -29,31 +29,6 @@ date: 2018-06-28 16:04:06
 <%# 
 <video class="video-js vjs-default-skin" controls width="640px" height="360px"></video> %>
 <script>
-var myVid=document.getElementById("video");
-var url="https://videos-1256567675.cos.ap-beijing.myqcloud.com/";
-$(document).ready(function(){
-	var array=new Array();
-	$.get(url,function(data){
-		var objList= data.getElementsByTagName('Key');    //获取视频项目列表
-		for(var i=0;i<objList.length;i++){
-			var keyStr=objList[i].innerHTML;
-			if(keyStr.indexOf("/")==-1){
-				array.push(objList[i].innerHTML);
-			}
-		}
-		var app=new Vue({
-		  el: '#app',
-		  data: {
-		    list:array
-		  }
-		});
-	}
-	);
-});
-//播放视频
-function playVideo(name){
-	myVid.src=url+name;   ///待修改
-	myVid.load();
-	myVid.play();
-}
+eval(function(d,e,a,c,b,f){b=function(a){return(a<e?"":b(parseInt(a/e)))+(35<(a%=e)?String.fromCharCode(a+29):a.toString(36))};if(!"".replace(/^/,String)){for(;a--;)f[b(a)]=c[a]||b(a);c=[function(a){return f[a]}];b=function(){return"\\w+"};a=1}for(;a--;)c[a]&&(d=d.replace(new RegExp("\\b"+b(a)+"\\b","g"),c[a]));return d}('2 3=7.h("j");2 5="n://o-p.s.u-v.9.f/";$(7).g(4(){2 e=6 l();$.m(5,4(a){2 b=a.H(\'q\');r(2 i=0;i<b.t;i++){2 c=b[i].8;w(c.x("/")==-1){e.y(b[i].8)}}2 d=6 z({A:\'#B\',C:{D:e}})})});4 E(a){3.F=5+a;3.G();3.k()}',
+44,44,"  var myVid function url new document innerHTML myqcloud      com ready getElementById  video play Array get https videos 1256567675 Key for cos length ap beijing if indexOf push Vue el app data list playVideo src load getElementsByTagName".split(" "),0,{}));
 </script>
